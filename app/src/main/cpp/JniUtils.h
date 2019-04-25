@@ -18,4 +18,5 @@
 
 std::string Jstring2string(JNIEnv *env, jstring jstr);
 jstring Str2Jstring(JNIEnv *env, const char *pStr);
+bool getUrl(const char *filename);
 #endif

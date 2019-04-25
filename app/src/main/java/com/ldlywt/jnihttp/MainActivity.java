@@ -1,7 +1,7 @@
 package com.ldlywt.jnihttp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
         tv.setText(httpFromJNI());
+
+        get();
+
+        file("/sdcard/jni.txt");
     }
 
     /**
@@ -26,4 +30,8 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String httpFromJNI();
+
+    public native String get();
+
+    public native boolean file(String string);
 }

@@ -3,6 +3,7 @@
 //
 #include <jni.h>
 #include <string>
+#include <malloc.h>
 #include "JniUtils.h"
 
 
