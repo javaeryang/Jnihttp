@@ -71,7 +71,7 @@ JNIEXPORT jstring JNICALL
 Java_com_ldlywt_jnihttp_MainActivity_get(JNIEnv *env, jobject instance) {
 
     // TODO
-    const char *fileName = "/sdcard/jni2.mp3";
+    const char *fileName = "/sdcard/jni2.apk";
     getUrl(fileName);
 
 //    string getUrlStr = "http://www.baidu.com";
@@ -108,7 +108,7 @@ bool getUrl(const char *filename)
     if (curl)
     {
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, true);
-        curl_easy_setopt(curl, CURLOPT_URL,"http://fs.w.kugou.com/201904251056/7274014571a0cbff50caa5abdbb4d320/G157/M00/12/11/3Q0DAFy9uBuAYaNkAEj94uwiMZs807.mp3");
+        curl_easy_setopt(curl, CURLOPT_URL,"https://github.com/javaeryang/wechat/blob/master/app/src/kshow/app/app-release.apk?raw=true");
 //        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1);
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 1);
@@ -120,7 +120,7 @@ bool getUrl(const char *filename)
         if (res != 0) {
 //            LOGI("结果:%d", res);
         }
-        LOGI("结果:%d", res);
+        LOGI("apk结果:%d", res);
         curl_easy_cleanup(curl);
         fclose(fp);
         return true;
