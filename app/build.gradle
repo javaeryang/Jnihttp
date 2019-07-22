@@ -9,11 +9,10 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                arguments '-DANDROID_PLATFORM=android-13',
-                        '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=gnustl_static'
+                arguments '-DANDROID_PLATFORM=android-16',
+                        '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static'
             }
         }
         ndk {
