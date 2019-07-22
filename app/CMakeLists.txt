@@ -8,6 +8,7 @@ add_library(native-lib
 
  include_directories( src/main/cpp/include/jsoncpp
                       src/main/cpp/include/curl
+                      src/main/cpp/include/inline
                      )
 
 add_library(curl STATIC IMPORTED)
@@ -19,6 +20,11 @@ add_library(jsoncpp STATIC IMPORTED)
 set_target_properties(jsoncpp
   PROPERTIES IMPORTED_LOCATION
   ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libjsoncpp.a)
+
+add_library(hook STATIC IMPORTED)
+set_target_properties(hook
+PROPERTIES IMPORTED_LOCATION
+${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libhook.a)
 
 # 不能向下面格式写，会出现 Error:error: '../../../../src/main/libs/libjsoncpp.a', needed by '../obj/armeabi/libnative-lib.so', missing and no known rule to make it
 
@@ -41,4 +47,5 @@ target_link_libraries( # Specifies the target library.
 
                        jsoncpp
                        curl
+                       hook
                        ${log-lib} )

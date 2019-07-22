@@ -2,6 +2,9 @@ package com.ldlywt.jnihttp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +26,16 @@ public class MainActivity extends AppCompatActivity {
         get();
 
         file("/sdcard/jni.txt");
+
+        Log.i("fromNDK", "第一次结果===>test" + test());
+
+        Button button = (Button) findViewById(R.id.pri);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("fromNDK", "hook后结果===>test" + test());
+            }
+        });
     }
 
     /**
@@ -34,4 +47,6 @@ public class MainActivity extends AppCompatActivity {
     public native String get();
 
     public native boolean file(String string);
+
+    public static native int test();
 }

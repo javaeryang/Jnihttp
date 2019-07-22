@@ -6,6 +6,54 @@
 #include <pthread.h>
 #include <stdlib.h>
 
+#include "inlineHook.h"
+
+int hook(void);
+
+const struct JNINativeInterface* NativeInterface;
+
+JNIEXPORT void JNICALL (*old_printfData)(JNIEnv* env,jobject thiz) = NULL;
+JNIEXPORT void JNICALL new_printfData(JNIEnv* env,jobject thiz)
+{
+    LOGI("new_printfInlineHook");
+}
+JNIEXPORT jint JNICALL (*old)(JNIEnv *env, jclass jclass1) = NULL;
+
+JNIEXPORT jint JNICALL (newP)(JNIEnv *env, jclass jclass1){
+    return 100;
+}
+
+extern "C" JNIEXPORT jint JNICALL Java_com_ldlywt_jnihttp_MainActivity_test(JNIEnv *env, jclass jclass1){
+    return 1;
+}
+
+int hook(void)
+{
+    LOGI("000000000000");
+    if (registerInlineHook((uint32_t) Java_com_ldlywt_jnihttp_MainActivity_test, (uint32_t) newP, (uint32_t **) &old) != ELE7EN_OK) {
+        LOGI("1111111111111");
+        return -1;
+    }
+    LOGI("222222222222");
+    if (inlineHook((uint32_t) Java_com_ldlywt_jnihttp_MainActivity_test) != ELE7EN_OK) {
+        LOGI("33333333333");
+        return -1;
+    }
+    LOGI("44444444444444444");
+
+    return 0;
+}
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved)
+{
+    struct _JNIEnv env;
+    if (vm->GetEnv( (void**)&env, JNI_VERSION_1_4) == JNI_OK) {
+        NativeInterface = env.functions;
+        hook();
+        return JNI_VERSION_1_4;
+    }
+}
+
 
 CURLcode curl_get_req(const std::string &url, std::string &response)
 ;
@@ -177,6 +225,7 @@ void* threadRun(void* arg){
     FILE *fp = fopen(c->path, "r");
     if(fp == NULL){
         LOGI("文件不可读/读取失败");
+        return NULL;
     }
     char strLine[1024];
     while(!feof(fp)){
